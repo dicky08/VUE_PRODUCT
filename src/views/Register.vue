@@ -16,7 +16,7 @@
                 <div class="input-group mb-3">
                   <input
                     v-model="form.email"
-                    type="text"
+                    type="email"
                     class="form-control"
                     placeholder="Email"
                     aria-label="Email"

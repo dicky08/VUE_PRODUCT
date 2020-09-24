@@ -39,7 +39,7 @@
                   <h4>Product name</h4>
                 </div>
                 <div class="col-md-7">
-                  <input type="text" class="form-control" v-model="product_name" />
+                  <input type="text" class="form-control" v-model="product_name" required />
                 </div>
               </div>
               <div class="row mb-3">
@@ -47,7 +47,7 @@
                   <h4>Price</h4>
                 </div>
                 <div class="col-md-7">
-                  <input type="number" class="form-control" v-model="price" />
+                  <input type="number" class="form-control" v-model="price" required/>
                 </div>
               </div>
               <div class="row mb-3">
