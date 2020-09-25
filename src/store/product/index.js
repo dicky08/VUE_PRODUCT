@@ -28,6 +28,9 @@ const mutations = {
   SET_LIMIT (state, payload) {
     state.allData.product = payload
   },
+  SET_PAGINATE (state, payload) {
+    state.allData.product = payload
+  },
   SET_DELETE (state, payload) {
     state.allData.product = payload
   },
@@ -35,6 +38,9 @@ const mutations = {
     state.allData.product = payload
   },
   SET_SEARCH (state, payload) {
+    state.allData.product = payload
+  },
+  SET_PRICE (state, payload) {
     state.allData.product = payload
   }
 }
@@ -102,6 +108,18 @@ const actions = {
       console.log(error.message)
     }
   },
+  async paginate (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${URL}/product/getAll?limit=10&pages=${payload}`)
+        .then((result) => {
+          context.commit('SET_PAGINATE', result.data, payload)
+          resolve(result.data.tableRow.totalPages)
+        })
+        .catch((err) => {
+          reject(new Error(err))
+        })
+    })
+  },
   async deletedProduct (context, payload) {
     try {
       const result = await axios.delete(`${URL}/product/delete/${payload}`)
@@ -114,6 +132,14 @@ const actions = {
     try {
       const result = await axios.get(`${URL}/product/getAll?name=${payload}`)
       context.commit('SET_SEARCH', result.data, payload)
+    } catch (error) {
+      console.log(error.message)
+    }
+  },
+  async sortPrice (context, payload) {
+    try {
+      const result = await axios.get(`${URL}/product/getAll?orderBy=price&sort=${payload}`)
+      context.commit('SET_PRICE', result.data, payload)
     } catch (error) {
       console.log(error.message)
     }

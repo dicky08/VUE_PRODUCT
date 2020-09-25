@@ -11,7 +11,7 @@
       </div>
       <div class="col-lg-12 col-md-3 col-sm-3 sides">
         <div class="fork mt-5">
-          <router-link to="/food" class="nav-link">
+          <router-link to="/product" class="nav-link">
             <img src="../assets/img/fork.svg" /> Foods
           </router-link>
         </div>

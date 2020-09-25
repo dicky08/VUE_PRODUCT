@@ -1,6 +1,6 @@
 <template>
   <div class="hisotry">
-      <!-- <Collapse /> -->
+       <Collapse type="history"/>
       <Navbar type="history"/>
       <div class="row">
         <Sidebar />
@@ -99,19 +99,39 @@
 </template>
 
 <script>
+import { Bar, mixins } from 'vue-chartjs'
+import Collapse from '../components/Collapse'
 import ModalDetail from '../components/Modal'
 import { mapGetters, mapActions } from 'vuex'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
+// import { Bar } from 'vue-chartjs'
 export default {
+  mixins: [mixins.reactiveData],
+  extends: Bar,
   components: {
+    Collapse,
     Navbar,
     Sidebar,
     ModalDetail
   },
   data () {
     return {
-      detailData: []
+      detailData: [],
+      chartdata: {
+        labels: ['January', 'February'],
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#f87979',
+            data: [40, 20]
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
     }
   },
   computed: {

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Registrasi from '../views/Register.vue'
-import Food from '../views/Food.vue'
+import Product from '../views/Product.vue'
 import History from '../views/History.vue'
 import store from '../store/'
 // import { from } from 'core-js/fn/array'
@@ -33,9 +33,9 @@ const routes = [
     }
   },
   {
-    path: '/food',
-    name: 'Food',
-    component: Food,
+    path: '/product',
+    name: 'Product',
+    component: Product,
     meta: {
       requiresAuth: true
     }

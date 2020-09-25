@@ -17,10 +17,10 @@
             </div>
             <div class="col-lg-4 ">
               <b-input-group size="sm" class="mb-2 search-item">
+                <b-form-input  type="search"  v-model="search" placeholder="Search product name"></b-form-input>
                 <b-input-group-prepend is-text>
-                  <b-icon icon="search"></b-icon>
+                  <b-icon icon="search" class="cari" @click="searchProduct()"></b-icon>
                 </b-input-group-prepend>
-                <b-form-input type="search" @keyup="searchProduct" v-model="search" placeholder="Search terms"></b-form-input>
               </b-input-group>
             </div>
           </div>
@@ -79,6 +79,7 @@ export default {
       actionSearch: 'product/search_Product'
     }),
     searchProduct () {
+      this.$router.push({ path: '/product', query: { name: this.search } })
       this.actionSearch(this.search)
     }
   }
@@ -112,7 +113,9 @@ export default {
 .menu img {
   width: 45px;
 }
-
+.cari {
+  cursor: pointer;
+}
 /* Break Point */
 @media(max-width:1024px){
     /* Menu */

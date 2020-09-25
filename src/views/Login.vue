@@ -121,7 +121,7 @@ export default {
       this.actionLogin(this.form)
         .then((response) => {
           console.log(response)
-          window.location = '/food'
+          window.location = '/product'
         })
         .catch((err) => {
           console.log(err)

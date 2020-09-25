@@ -1,7 +1,7 @@
 <template>
   <div class="food">
     <div class="container-fluid">
-      <!-- Collapse -->
+      <Collapse type="product"/>
       <!-- {{getProductAll}} -->
     </div>
     <Modal type="edit" :productId="productId" :categoryId="categoryId" :productName="productName" :priceEdit="priceEdit" :imageEdit="imageEdit"/>
@@ -13,7 +13,7 @@
       <Sidebar />
       <div class="col-lg-7">
         <div class="row mt-2">
-          <div class="col-md-3 ml-4">
+          <div class="col-md-3">
             <select class="form-control mt-2 select-sort" @change="limitSorting" v-model="sorting">
               <option value>{{select}} sorting</option>
               <option value='5'>5</option>
@@ -22,20 +22,36 @@
               <option value='20'>20</option>
             </select>
           </div>
-          <div class="col-md-3 ml-4">
+          <div class="col-md-3">
             <select class="form-control mt-2 select-category" @change="orderBy" v-model="selectOrder" >
               <option disabled value>{{select}} Category</option>
               <option value>{{select}} All Category</option>
               <option v-for="(dataCategory, index) in allCategory.category.data" :key="index">{{dataCategory.category_name}}</option>
             </select>
-
+          </div>
+          <div class="col-md-3 mt-2">
+            <select class="form-control" @change="priceSorting" v-model="sortPrice">
+              <option disabled value>Sort Price</option>
+              <option value="asc">Low</option>
+              <option value="desc">High</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <div class="row mt-2">
+              <div class="col-md-5 btn-prev">
+                <button class="btn  btn-sm form-control btn-previ" @click="prev(1)" >Previous</button>
+              </div>
+              <div class="col-md-5 btn-next ml-1">
+                <button class="btn  btn-sm form-control" @click="next()" >Next</button>
+              </div>
+            </div>
           </div>
           <div class="col-md-5 search-item">
             <b-input-group size="sm" class="mb-2">
               <b-input-group-prepend is-text>
                 <b-icon icon="search"></b-icon>
               </b-input-group-prepend>
-              <b-form-input type="search" placeholder="Search terms"></b-form-input>
+              <b-form-input type="search" placeholder="Search product name"></b-form-input>
             </b-input-group>
           </div>
         </div>
@@ -143,6 +159,7 @@
 </template>
 
 <script>
+import Collapse from '../components/Collapse'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import Card from '../components/Card'
@@ -154,6 +171,7 @@ export default {
   name: 'Food',
   mixins: [select],
   components: {
+    Collapse,
     Navbar,
     Sidebar,
     Card,
@@ -166,11 +184,14 @@ export default {
       carts: [],
       selectOrder: '',
       sorting: '',
+      sortPrice: '',
       productId: null,
       categoryId: null,
       productName: null,
       priceEdit: null,
       imageEdit: null,
+      paginasi: [],
+      count: 1,
       URL: process.env.VUE_APP_URL
     }
   },
@@ -179,6 +200,7 @@ export default {
       this.amount = dataCart.reduce((acc, dataCart) => {
         return acc + dataCart.price * dataCart.qty
       }, 0)
+      console.log(this.$route.query.pages)
     }
   },
   computed: {
@@ -197,7 +219,10 @@ export default {
       actionsCategory: 'category/getAllCategory',
       // store/index.js/modulProduct/store/product/ndex.js/actionsCategory
       orderByCategory: 'product/getOrderBy',
-      limit: 'product/sortingLimit'
+      limit: 'product/sortingLimit',
+      pagination: 'product/paginate',
+      sortingPrice: 'product/sortPrice',
+      actionSearch: 'product/search_Product'
     }),
     edit (idEdit, index) {
       this.productId = this.allProduct.product.data[index].id
@@ -212,6 +237,28 @@ export default {
     },
     limitSorting () {
       this.limit(this.sorting)
+    },
+    prev (data) {
+      this.$router.push({ path: '/product', query: { limit: 10, pages: data } })
+      this.pagination(data)
+    },
+    next () {
+      let angka = this.count += 1
+      this.$router.push({ path: '/product', query: { limit: 10, pages: angka } })
+      this.pagination(angka)
+        .then(res => {
+          if (angka > res) {
+            alert('lebih')
+            angka = 2
+            this.$router.push({ path: '/product', query: { limit: 10, pages: angka } })
+            this.pagination(angka)
+          // window.location = '/product'
+          }
+        })
+        .catch(err => console.log(err))
+    },
+    priceSorting () {
+      this.sortingPrice(this.sortPrice)
     },
     order (idOrder) {
       const cart = this.carts.filter(e => e.id === idOrder)
@@ -322,6 +369,16 @@ margin-left: -50px;
 .cancels {
   background: #F24F8A;
 }
+  .btn-prev, .btn-next {
+    background-color: rgb(241, 245, 245);
+  }
+  .btn-previ{
+    text-align: center;
+  }
+  .btn-prev:hover, .btn-next:hover {
+    background-color: rgb(178, 184, 184);
+    transition: all .8s;
+  }
 /* Break Point */
 @media (max-width: 1024px) {
   .search-item {

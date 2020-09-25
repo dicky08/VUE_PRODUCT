@@ -8,8 +8,13 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/css/main.css'
 import { URL } from '../src/helper/env'
 import axios from 'axios'
+import VueCharts, { Bar, Line } from 'vue-chartjs'
+
 Vue.config.productionTip = false
 // Install BootstrapVue
+Vue.use(Bar)
+Vue.use(Line)
+Vue.use(VueCharts)
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
@@ -24,7 +29,7 @@ axios.interceptors.response.use(function (response) {
       })
         .then((result) => {
           localStorage.setItem('token', result.data.data.newToken)
-          window.location = '/food'
+          window.location = '/product'
         })
         .catch((er) => {
           console.log(er)
