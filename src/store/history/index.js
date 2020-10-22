@@ -4,7 +4,8 @@ const { URL } = require('../../helper/env')
 const state = () => {
   return {
     dataHistory: [],
-    dataDetail: []
+    dataDetail: [],
+    history_detail: []
   }
 }
 const getters = {
@@ -13,6 +14,9 @@ const getters = {
   },
   getDetail (state) {
     return state
+  },
+  get_history_detail (state) {
+    return state.history_detail
   }
 }
 
@@ -22,6 +26,9 @@ const mutations = {
   },
   SET_DETAIL (state, payload) {
     state.dataDetail = payload
+  },
+  SET_HISTORY_DETAIL (state, payload) {
+    state.history_detail = payload
   }
 }
 const actions = {
@@ -41,7 +48,7 @@ const actions = {
       axios.get(`${URL}/history/getAll`)
         .then((result) => {
           context.commit('SET_HISTORY', result.data)
-          console.log(result)
+          resolve(result.data)
         }).catch((err) => {
           console.log(err)
         })
@@ -52,6 +59,18 @@ const actions = {
       axios.get(`${URL}/history/getJoin`)
         .then((result) => {
           context.commit('SET_DETAIL', result.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    })
+  },
+  getHistoryDetail (context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${URL}/history_detail/getAll`)
+        .then((result) => {
+          context.commit('SET_HISTORY_DETAIL', result.data.data)
+          resolve(result.data.data)
         })
         .catch((err) => {
           console.log(err)

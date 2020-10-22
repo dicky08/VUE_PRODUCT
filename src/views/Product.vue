@@ -1,8 +1,8 @@
+/* eslint-disable prefer-const */
 <template>
   <div class="food">
     <div class="container-fluid">
       <Collapse type="product"/>
-      <!-- {{getProductAll}} -->
     </div>
     <Modal type="edit" :productId="productId" :categoryId="categoryId" :productName="productName" :priceEdit="priceEdit" :imageEdit="imageEdit"/>
     <Navbar type="food" :cart="carts.length"/>
@@ -39,7 +39,7 @@
           <div class="col-md-3">
             <div class="row mt-2">
               <div class="col-md-5 btn-prev">
-                <button class="btn  btn-sm form-control btn-previ" @click="prev(1)" >Previous</button>
+                <button class="btn  btn-sm form-control btn-previ" @click="prev()" >Previous</button>
               </div>
               <div class="col-md-5 btn-next ml-1">
                 <button class="btn  btn-sm form-control" @click="next()" >Next</button>
@@ -191,8 +191,10 @@ export default {
       priceEdit: null,
       imageEdit: null,
       paginasi: [],
-      count: 1,
-      URL: process.env.VUE_APP_URL
+      count: 0,
+      URL: process.env.VUE_APP_URL,
+      pagesActive: null,
+      activePages: null
     }
   },
   watch: {
@@ -200,7 +202,6 @@ export default {
       this.amount = dataCart.reduce((acc, dataCart) => {
         return acc + dataCart.price * dataCart.qty
       }, 0)
-      console.log(this.$route.query.pages)
     }
   },
   computed: {
@@ -238,24 +239,35 @@ export default {
     limitSorting () {
       this.limit(this.sorting)
     },
-    prev (data) {
-      this.$router.push({ path: '/product', query: { limit: 10, pages: data } })
-      this.pagination(data)
+    prev () {
+      let pagesAkitf = this.allProduct.product.tableRow.pagesActive
+      const kurangiSatu = pagesAkitf -= 1
+      this.pagination(kurangiSatu)
+      this.$router.push({ path: '/product', query: { limit: 5, pages: kurangiSatu } })
+      if (pagesAkitf < 1) {
+        pagesAkitf = 1
+        this.$router.push({ path: '/product', query: { limit: 5, pages: 1 } })
+        this.pagination(pagesAkitf)
+      }
     },
     next () {
-      let angka = this.count += 1
-      this.$router.push({ path: '/product', query: { limit: 10, pages: angka } })
-      this.pagination(angka)
-        .then(res => {
-          if (angka > res) {
-            alert('lebih')
-            angka = 2
-            this.$router.push({ path: '/product', query: { limit: 10, pages: angka } })
-            this.pagination(angka)
-          // window.location = '/product'
-          }
-        })
-        .catch(err => console.log(err))
+      const counter = 2
+      // const angka = this.count += 1
+      this.$router.push({ path: '/product', query: { limit: 5, pages: counter } })
+      let pagesAkitf = this.allProduct.product.tableRow.pagesActive
+      const totalPage = this.allProduct.product.tableRow.totalPages
+      const tambahSatu = pagesAkitf += 1
+      this.pagination(counter)
+      if (pagesAkitf) {
+        this.$router.push({ path: '/product', query: { limit: 5, pages: tambahSatu } })
+        this.pagination(pagesAkitf)
+      }
+      if (pagesAkitf > totalPage) {
+        alert('Max Page ' + totalPage)
+        pagesAkitf = totalPage
+        this.$router.push({ path: '/product', query: { limit: 5, pages: pagesAkitf } })
+        this.pagination(pagesAkitf)
+      }
     },
     priceSorting () {
       this.sortingPrice(this.sortPrice)

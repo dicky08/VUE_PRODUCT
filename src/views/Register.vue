@@ -126,8 +126,13 @@ export default {
     onRegister () {
       this.actionRegister(this.form)
         .then((response) => {
-          alert(response)
-          window.location = '/'
+          console.log(response)
+          if (response.message === "Error: Duplicate entry 'arah.gt06@gmail.com' for key 'email'") {
+            alert('Email has been registered!')
+          } else {
+            alert('Registrasi Success, Please check gmail for your verification')
+            window.location = '/login'
+          }
         })
         .catch((err) => {
           alert(err)

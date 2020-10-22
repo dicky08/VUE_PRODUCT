@@ -191,7 +191,7 @@
                   <h4>Cashier :</h4>
                 </div>
                 <div class="col-md-6">
-                  <input type="text" class="form-control" placeholder="Name" v-model="cashier" />
+                  <input type="text" class="form-control" placeholder="Name" v-model="email" readonly />
                 </div>
               </div>
               <div class="row detail-transaksi" v-for="(cart, index) in carts " :key="index">
@@ -317,12 +317,12 @@ export default {
   ],
   data () {
     return {
+      email: localStorage.getItem('email'),
       c_id: '',
       product_name: '',
       price: '',
       image: null,
       dataDetail: null,
-      cashier: null,
       orderNumber: null,
       history: {},
       URL: process.env.VUE_APP_URL
@@ -339,7 +339,6 @@ export default {
   methods: {
     onSelectFile (event) {
       this.image = event.target.files[0]
-      // console.log(this.image)
     },
     onSelectFileedit (event) {
       this.imageEdit = event.target.files[0]
@@ -402,37 +401,33 @@ export default {
       const time = date.getTime()
       const invoice = `INV - ${time}`
       const ppn = this.amount * 0.1
-      if (this.cashier !== null) {
-        const newDetail = this.carts.map((e) => {
-          const dataDetail = {
-            product_id: e.id,
-            name_product: e.product_name,
-            qty: e.qty,
-            price: e.price
-          }
-          return dataDetail
-        })
-        const data = {
-          cashier_name: this.cashier,
-          invoice: invoice,
-          ppn: ppn,
-          amount: this.amount,
-          detail: newDetail
+      const newDetail = this.carts.map((e) => {
+        const dataDetail = {
+          product_id: e.id,
+          name_product: e.product_name,
+          qty: e.qty,
+          price: e.price
         }
-        this.actHistory(data)
-          .then((result) => {
-            alert(result)
-            setTimeout(() => {
-              this.getProduct()
-              location.reload(true)
-            }, 1000)
-          })
-          .catch((err) => {
-            alert(err)
-          })
-      } else {
-        alert(null)
+        return dataDetail
+      })
+      const data = {
+        cashier_name: this.email,
+        invoice: invoice,
+        ppn: ppn,
+        amount: this.amount,
+        detail: newDetail
       }
+      this.actHistory(data)
+        .then((result) => {
+          alert(result)
+          setTimeout(() => {
+            this.getProduct()
+            location.reload(true)
+          }, 1000)
+        })
+        .catch((err) => {
+          alert(err)
+        })
     },
     mounted () {
       this.actionsCategory()

@@ -12,6 +12,9 @@ const state = () => {
 const getters = {
   getAllProducts (state) {
     return state.allData
+  },
+  bestProduct (state) {
+    return state.allData
   }
 
 }
@@ -82,7 +85,22 @@ const actions = {
       axios.get(`${URL}/product/getAll`)
         .then((result) => {
           context.commit('SET_DATA', result.data)
-          resolve(result)
+          resolve(result.data)
+        }).catch((err) => {
+          reject(err)
+          console.log(err.message)
+        })
+        .finally(() => {
+          context.commit('SET_LOADING', false)
+        })
+    })
+  },
+  bestProduct (context, payload) {
+    context.commit('SET_LOADING', true)
+    return new Promise((resolve, reject) => {
+      axios.get(`${URL}/product/best-product`)
+        .then((result) => {
+          context.commit('SET_DATA', result.data.data)
         }).catch((err) => {
           reject(err)
           console.log(err.message)
@@ -110,10 +128,10 @@ const actions = {
   },
   async paginate (context, payload) {
     return new Promise((resolve, reject) => {
-      axios.get(`${URL}/product/getAll?limit=10&pages=${payload}`)
+      axios.get(`${URL}/product/getAll?limit=5&pages=${payload}`)
         .then((result) => {
           context.commit('SET_PAGINATE', result.data, payload)
-          resolve(result.data.tableRow.totalPages)
+          resolve(result.data.tableRow)
         })
         .catch((err) => {
           reject(new Error(err))
@@ -121,12 +139,15 @@ const actions = {
     })
   },
   async deletedProduct (context, payload) {
-    try {
-      const result = await axios.delete(`${URL}/product/delete/${payload}`)
-      context.commit('SET_DELETE', result.data, payload)
-    } catch (error) {
-      console.log(error.message)
-    }
+    return new Promise((resolve, reject) => {
+      axios.delete(`${URL}/product/delete/${payload}`)
+        .then((result) => {
+          resolve(result.data.message)
+        })
+        .catch((err) => {
+          reject(new Error(err))
+        })
+    })
   },
   async search_Product (context, payload) {
     try {

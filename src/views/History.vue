@@ -11,7 +11,7 @@
               <div class="card shadow1">
                 <div class="card-body">
                   Todays Income
-                  <h4 class="income">RP. 1000.000</h4>
+                  <h4 class="income">RP. {{totalSales}}</h4>
                   <p>+2% Yesterday</p>
                 </div>
                 <div class="circle1"></div>
@@ -24,7 +24,7 @@
               <div class="card shadow2">
                 <div class="card-body">
                   Orders
-                  <h4 class="income">3.270</h4>
+                  <h4 class="income">{{totalQty}}</h4>
                   <p>+5% Last Week</p>
                   <div class="circle1"></div>
                   <div class="circle2"></div>
@@ -50,14 +50,8 @@
           <div class="row mt-5 shadow ">
             <div class="col-lg-12 col-md-6 col-sm-6 col-12  chart">
                 <h4>Revenue Line</h4>
-              <chart class="table-responsive"
+              <chart
                 :options="chartOptionsLine"
-              style="width:100%"></chart>
-            </div>
-            <div class="col-lg-12 col-md-6 col-sm-6 col-12  chart">
-                <h4>Revenue Bar</h4>
-              <chart class="table-responsive"
-                :options="chartOptionsBar"
               style="width:100%"></chart>
             </div>
           </div>
@@ -68,7 +62,7 @@
                 <thead>
                   <tr>
                     <!-- {{history_detail}} -->
-                    <th scope="col">No</th>
+                    <th scope="col">No{{amount}}</th>
                     <th scope="col">Invoice</th>
                     <th scope="col">Cashier</th>
                     <th scope="col">Date</th>
@@ -118,42 +112,81 @@ export default {
   data () {
     return {
       detailData: [],
-      chartdata: {
-        labels: ['January', 'February'],
-        datasets: [
-          {
-            label: 'Data One',
-            backgroundColor: '#f87979',
-            data: [40, 20]
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false
-      }
+      chartOptionsLine: null,
+      amount: [],
+      totalSales: null,
+      totalQty: null
     }
   },
   computed: {
     ...mapGetters({
       allDetailHistory: 'history/getHistory',
-      allDetail: 'history/getDetail'
+      allDetail: 'history/getDetail',
+      history_detail: 'history/get_history_detail'
     })
   },
   methods: {
     ...mapActions({
       getHistory: 'history/getHistory',
-      getDetail: 'history/getDetail'
+      getDetail: 'history/getDetail',
+      actHistoryDetail: 'history/getHistoryDetail'
     }),
     detail (id) {
       // alert(id)
       const data = this.allDetail.dataDetail.data.filter(e => e.history_id === id)
       this.detailData = data
     }
+
   },
   mounted () {
     this.getHistory()
+      .then((result) => {
+        const amount = result.data.map(e => {
+          return e.amount
+        })
+        const date = result.data.map(e => {
+          const split = e.orders_date.split(' ')
+          return split[0]
+        })
+        const amountSales = result.data.reduce((acc, data) => {
+          return acc + data.amount
+        }, 0)
+        this.totalSales = amountSales
+        this.chartOptionsLine = {
+          xAxis: {
+            data: date
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              type: 'line',
+              data: amount
+            }
+          ],
+          title: {
+            text: 'Income every month',
+            x: 'center',
+            textStyle: {
+              fontSize: 24
+            }
+          },
+          color: ['#29dfff']
+        }
+      }).catch((err) => {
+        console.log(err.message)
+      })
     this.getDetail()
+    this.actHistoryDetail()
+      .then((result) => {
+        const qty = result.reduce((acc, data) => {
+          return acc + data.qty
+        }, 0)
+        this.totalQty = qty
+      }).catch((err) => {
+        console.log(err.message)
+      })
   }
 }
 </script>

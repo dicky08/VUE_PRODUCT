@@ -19,7 +19,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios.post(`${URL}/users/register`, payload)
         .then((result) => {
-          resolve(result.data.Message)
+          resolve(result.data)
         }).catch((err) => {
           reject(err)
         })
@@ -29,10 +29,14 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios.post(`${URL}/users/login`, payload)
         .then((result) => {
-          localStorage.setItem('token', result.data.data.accessToken)
-          localStorage.setItem('refreshToken', result.data.data.refreshToken)
-          console.log(result)
-          resolve(result.data.message)
+          if (result.data.code === 404) {
+            resolve(result.data)
+          } else {
+            localStorage.setItem('token', result.data.data.accessToken)
+            localStorage.setItem('refreshToken', result.data.data.refreshToken)
+            localStorage.setItem('email', result.data.data.email)
+            resolve(result.data)
+          }
         }).catch((err) => {
           if (err.message === 'Request failed with status code 404') {
             alert('email has not been registered')
@@ -48,6 +52,7 @@ const actions = {
     return new Promise((resolve) => {
       localStorage.removeItem('token')
       localStorage.removeItem('refreshToken')
+      localStorage.removeItem('email')
       resolve()
     })
   }

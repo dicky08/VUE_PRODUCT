@@ -60,7 +60,6 @@ export default {
     onLogout () {
       this.actionLogout()
         .then(() => {
-          alert('Berhasil Logout')
           window.location = '/'
         })
     }

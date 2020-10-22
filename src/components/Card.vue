@@ -1,5 +1,20 @@
 <template>
-  <div class="card mt-4 ml-1 card-product shadow">
+  <div v-if="type==='best'">
+    <div class="card mt-4 ml-1 card-product shadow">
+    <img :src="`${URL}/${dataProduct.image}`" class="card-img-top" />
+    <div class="card-body">
+      <h5 class="card-title">{{dataProduct.product_name}}</h5>
+      <hr />
+      <p class="card-text">
+        Harga :
+        <strong>Rp. {{dataProduct.price}}</strong>
+      </p>
+      <router-link to="/product" class="btn btn-info float-right"><b-icon-arrow-right-circle-fill></b-icon-arrow-right-circle-fill> See food</router-link>
+    </div>
+  </div>
+  </div>
+  <div v-else>
+    <div class="card mt-4 ml-1 card-product shadow">
     <img :src="`${URL}/${dataProduct.image}`" class="card-img-top" />
     <div class="card-body">
       <h5 class="card-title">{{dataProduct.product_name}}</h5>
@@ -21,12 +36,6 @@
             <b-icon-pencil></b-icon-pencil>
           </a>
         </div>
-        <!-- <div class="col-md-4 mb-2">
-          <a href="#" class="btn btn-primary btn-sm btn-block" @click="hapus" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-            <b-icon-pencil-square></b-icon-pencil-square>
-          </a>
-        </div> -->
-        <!-- //@click="getId(dataProduct.id) -->
         <div class="col-md-4 mb-2">
           <button class="btn btn-primary btn-sm btn-block" @click="$emit('orderfood', dataProduct.id)" >
             <b-icon-cart4></b-icon-cart4>
@@ -40,6 +49,7 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -47,7 +57,7 @@ import Modal from './Modal'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Card',
-  props: ['dataProduct', 'index'],
+  props: ['dataProduct', 'index', 'type'],
   components: {
     Modal
   },
@@ -73,11 +83,15 @@ export default {
     }),
     deleteds (id) {
       this.deleteProduct(id)
-      alert('Data has been deleted')
-      setTimeout(() => {
-        this.getProduct()
-        location.reload(true)
-      }, 1000)
+        .then((result) => {
+          alert(result)
+          setTimeout(() => {
+            this.getProduct()
+            location.reload(true)
+          }, 1000)
+        }).catch((err) => {
+          console.log(err.message)
+        })
     }
   }
 }

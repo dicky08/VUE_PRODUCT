@@ -120,11 +120,14 @@ export default {
     onLogin () {
       this.actionLogin(this.form)
         .then((response) => {
-          console.log(response)
-          window.location = '/product'
+          if (response.code === 404) {
+            alert('Wrong password')
+          } else {
+            window.location = '/product'
+          }
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.message)
         })
     },
     ...mapActions({
