@@ -101,6 +101,7 @@ const actions = {
       axios.get(`${URL}/product/best-product`)
         .then((result) => {
           context.commit('SET_DATA', result.data.data)
+          console.log(result)
         }).catch((err) => {
           reject(err)
           console.log(err.message)

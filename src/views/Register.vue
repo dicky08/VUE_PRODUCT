@@ -51,7 +51,7 @@
                 </select>
                 <!-- Button -->
                 <button type="submit" class="btn btn-primary btn-block float-left">Registrasi</button>
-                <p>already have an account? <a href="/">Login</a></p>
+                <p>already have an account? <router-link to="/login">Login</router-link></p>
               </div>
             </div>
           </div>

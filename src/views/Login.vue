@@ -46,7 +46,7 @@
                 </div>
                 <!-- Button -->
                 <button type="submit" class="btn btn-primary btn-block float-left">Login</button>
-                <p>don't have an account yet? <a href="/register">Registrasi</a></p>
+                <p>don't have an account yet? <router-link to="/register">Registrasi</router-link> / <router-link to="/">Home</router-link>  </p>
               </div>
             </div>
           </div>
