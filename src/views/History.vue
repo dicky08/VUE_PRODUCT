@@ -184,7 +184,7 @@ export default {
         }, 0)
         this.totalQty = qty
       }).catch((err) => {
-        console.log(err.message)
+        console.log(err)
       })
   }
 }

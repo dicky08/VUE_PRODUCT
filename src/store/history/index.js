@@ -50,7 +50,7 @@ const actions = {
           context.commit('SET_HISTORY', result.data)
           resolve(result.data)
         }).catch((err) => {
-          console.log(err)
+          console.log(err.message)
         })
     })
   },
@@ -61,7 +61,7 @@ const actions = {
           context.commit('SET_DETAIL', result.data)
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.message)
         })
     })
   },
@@ -73,7 +73,7 @@ const actions = {
           resolve(result.data.data)
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.message)
         })
     })
   }

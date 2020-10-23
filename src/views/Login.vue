@@ -21,6 +21,7 @@
                     placeholder="Email"
                     aria-label="Email"
                     aria-describedby="basic-addon1"
+                    required
                   />
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">
@@ -37,6 +38,7 @@
                     placeholder="Password"
                     aria-label="Password"
                     aria-describedby="basic-addon1"
+                    required
                   />
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">
@@ -127,7 +129,7 @@ export default {
           }
         })
         .catch((err) => {
-          console.log(err.message)
+          console.log(err)
         })
     },
     ...mapActions({

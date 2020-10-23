@@ -24,7 +24,7 @@ const actions = {
       const result = await axios.get(`${URL}/category/getAll`)
       context.commit('SET_CATEGORY', result.data)
     } catch (error) {
-      alert(error)
+      alert(error.message)
     }
   }
 }

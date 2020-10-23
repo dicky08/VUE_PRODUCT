@@ -10,7 +10,7 @@
     >
       <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
-          <form enctype="multipart/form-data">
+          <form @submit.prevent="insertData" >
             <div class="modal-header">
               <h5 class="modal-title" id="ModalAddProductLabel">Add Product</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -23,9 +23,8 @@
                   <h4>Category name</h4>
                 </div>
                 <div class="col-md-7">
-                  <select class="form-control nameCategory" v-model="c_id">
+                  <select class="form-control nameCategory" v-model="c_id" required>
                     <option disabled value>Select category</option>
-                    <option disabled value>Select Category</option>
                     <option
                       v-for="(dataCategory, index) in allCategory.category.data"
                       :key="index"
@@ -64,7 +63,7 @@
                 <button type="button" class="btn" data-dismiss="modal">Close</button>
               </div>
               <div class="save-btn">
-                <button type="submit" class="btn" @click.prevent="insertData">Add Product</button>
+                <button type="submit" class="btn" >Add Product</button>
               </div>
             </div>
           </form>

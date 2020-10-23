@@ -19,6 +19,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios.post(`${URL}/users/register`, payload)
         .then((result) => {
+          // console.log(result)
           resolve(result.data)
         }).catch((err) => {
           reject(err)

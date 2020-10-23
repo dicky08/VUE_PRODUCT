@@ -21,6 +21,7 @@
                     placeholder="Email"
                     aria-label="Email"
                     aria-describedby="basic-addon1"
+                    required
                   />
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">
@@ -37,6 +38,7 @@
                     placeholder="Password"
                     aria-label="Password"
                     aria-describedby="basic-addon1"
+                    required
                   />
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">
@@ -44,7 +46,7 @@
                     </span>
                   </div>
                 </div>
-                 <select class="form-control mb-3" v-model="form.level" >
+                 <select class="form-control mb-3" v-model="form.level" required>
                   <option disabled value>Hak akses</option>
                   <option value="0">Admin</option>
                   <option value="1">Cashier</option>
@@ -126,8 +128,7 @@ export default {
     onRegister () {
       this.actionRegister(this.form)
         .then((response) => {
-          console.log(response)
-          if (response.message === "Error: Duplicate entry 'arah.gt06@gmail.com' for key 'email'") {
+          if (response.message === "Error: Duplicate entry 'arah.gt08@gmail.com' for key 'email'") {
             alert('Email has been registered!')
           } else {
             alert('Registrasi Success, Please check gmail for your verification')
