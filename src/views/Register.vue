@@ -62,52 +62,64 @@
     </div>
 
     <div class="row d-sm-block d-md-none mobile">
-      <div class="col-md-12">
-        <div class="row ml4">
-          <div class="col-12 text-login mb-4">
-            <div class="dark font-weight-bold text-center mt-3">Login</div>
+      <form @submit.prevent="onRegister">
+        <div class="col-md-12">
+          <div class="row ml4">
+            <div class="col-12 text-login mb-4">
+              <div class="dark font-weight-bold text-center mt-3">Register</div>
+            </div>
+          </div>
+          <div class="row login-mobile">
+            <div class="col-md-6 col-12 col-sm-12">
+              <img src="../assets/img/view-login.svg" class="ml-1" />
+            </div>
+            <div class="col-md-3 col-sm-11 col-sm-6 col-11 mt-5 ml-4">
+              <!-- Email -->
+              <div class="input-group mb-3">
+                <input
+                  v-model="form.email"
+                  type="text"
+                  class="form-control"
+                  placeholder="Email"
+                  aria-label="Email"
+                  aria-describedby="basic-addon1"
+                  required
+                />
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">
+                    <b-icon-envelope-fill></b-icon-envelope-fill>
+                  </span>
+                </div>
+              </div>
+              <!-- Password -->
+              <div class="input-group mb-3">
+                <input
+                  v-model="form.password"
+                  type="password"
+                  class="form-control"
+                  placeholder="Password"
+                  aria-label="Password"
+                  aria-describedby="basic-addon1"
+                  required
+                />
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">
+                    <b-icon-lock-fill></b-icon-lock-fill>
+                  </span>
+                </div>
+              </div>
+              <select class="form-control mb-3" v-model="form.level" required>
+                    <option disabled value>Hak akses</option>
+                    <option value="0">Admin</option>
+                    <option value="1">Cashier</option>
+                  </select>
+              <!-- Button -->
+              <button class="btn btn-primary btn-block float-left">Register</button>
+              <p>already have an account? <router-link to="/login">Login</router-link></p>
+            </div>
           </div>
         </div>
-        <div class="row login-mobile">
-          <div class="col-md-6 col-12 col-sm-12">
-            <img src="../assets/img/view-login.svg" class="ml-1" />
-          </div>
-          <div class="col-md-3 col-sm-11 col-sm-6 col-11 mt-5 ml-4">
-            <!-- Email -->
-            <div class="input-group mb-3">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Email"
-                aria-label="Email"
-                aria-describedby="basic-addon1"
-              />
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">
-                  <b-icon-envelope-fill></b-icon-envelope-fill>
-                </span>
-              </div>
-            </div>
-            <!-- Password -->
-            <div class="input-group mb-3">
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Password"
-                aria-label="Password"
-                aria-describedby="basic-addon1"
-              />
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">
-                  <b-icon-lock-fill></b-icon-lock-fill>
-                </span>
-              </div>
-            </div>
-            <!-- Button -->
-            <button class="btn btn-primary btn-block float-left">Login</button>
-          </div>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>

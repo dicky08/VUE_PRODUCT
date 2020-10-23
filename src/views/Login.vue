@@ -63,45 +63,52 @@
             <div class="dark font-weight-bold text-center mt-3">Login</div>
           </div>
         </div>
-        <div class="row login-mobile">
-          <div class="col-md-6 col-12 col-sm-12">
-            <img src="../assets/img/view-login.svg" class="ml-1" />
-          </div>
-          <div class="col-md-3 col-sm-11 col-sm-6 col-11 mt-5 ml-4">
-            <!-- Email -->
-            <div class="input-group mb-3">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Email"
-                aria-label="Email"
-                aria-describedby="basic-addon1"
-              />
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">
-                  <b-icon-envelope-fill></b-icon-envelope-fill>
-                </span>
-              </div>
+        <form @submit.prevent="onLogin">
+          <div class="row login-mobile">
+            <div class="col-md-6 col-12 col-sm-12">
+              <img src="../assets/img/view-login.svg" class="ml-1" />
             </div>
-            <!-- Password -->
-            <div class="input-group mb-3">
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Password"
-                aria-label="Password"
-                aria-describedby="basic-addon1"
-              />
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">
-                  <b-icon-lock-fill></b-icon-lock-fill>
-                </span>
+            <div class="col-md-3 col-sm-11 col-sm-6 col-11 mt-5 ml-4">
+              <!-- Email -->
+              <div class="input-group mb-3">
+                <input
+                  v-model="form.email"
+                  type="text"
+                  class="form-control"
+                  placeholder="Email"
+                  aria-label="Email"
+                  aria-describedby="basic-addon1"
+                  required
+                />
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">
+                    <b-icon-envelope-fill></b-icon-envelope-fill>
+                  </span>
+                </div>
               </div>
+              <!-- Password -->
+              <div class="input-group mb-3">
+                <input
+                  v-model="form.password"
+                  type="password"
+                  class="form-control"
+                  placeholder="Password"
+                  aria-label="Password"
+                  aria-describedby="basic-addon1"
+                  required
+                />
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">
+                    <b-icon-lock-fill></b-icon-lock-fill>
+                  </span>
+                </div>
+              </div>
+              <!-- Button -->
+              <button class="btn btn-primary btn-block float-left">Login </button>
+              <p>don't have an account yet? <router-link to="/register">Registrasi</router-link> / <router-link to="/">Home</router-link>  </p>
             </div>
-            <!-- Button -->
-            <button class="btn btn-primary btn-block float-left">Login </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -122,14 +129,14 @@ export default {
     onLogin () {
       this.actionLogin(this.form)
         .then((response) => {
-          if (response.code === 404) {
-            alert('Wrong password')
-          } else {
+          if (response.status === 'OK') {
             window.location = '/product'
+          } else {
+            alert(response.message)
           }
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.message)
         })
     },
     ...mapActions({
