@@ -15,8 +15,7 @@ Actions => sama seperti mutations, akan tetapi actions dapat asynchronous.
 
 untuk Local storage merupakan fungsi di javascript yang cara kerjanya sama seperti cookie ( data disimpan dalam browser )  tapi memiliki beberapa kelebihan kelebihan. Local storage dapat menyimpan data lebih aman dan lebih besar dibandingkan dengan cookie. Local storage juga dapat menyimpan data lebih dari 5 MB tanpa harus membebani performa browser
 
-
-![regis](https://user-images.githubusercontent.com/53321389/94086628-bfa1df80-fe35-11ea-95d7-c17fca0474a8.PNG)
+![Capture](https://user-images.githubusercontent.com/53321389/96840353-85e3e900-1474-11eb-900c-9769279695bd.PNG)
 ![login](https://user-images.githubusercontent.com/53321389/94086632-c16ba300-fe35-11ea-9611-36bd899b520d.PNG)
 ![dash](https://user-images.githubusercontent.com/53321389/94086635-c4669380-fe35-11ea-8396-ec025ebccca9.PNG)
 ![add](https://user-images.githubusercontent.com/53321389/94086638-c6c8ed80-fe35-11ea-99ed-f76dc3cf36e8.PNG)
