@@ -56,7 +56,8 @@
           </div>
         </div>
         <div v-if="allProduct.isLoading">
-          <img src="../assets/img/loading.gif" width="120px" style="margin:150px 380px">
+          <img src="../assets/img/loading.gif" class="loading-desktop">
+          <img src="../assets/img/loading.gif" class="loading-mobile">
         </div>
         <div class="row" v-else>
           <div
@@ -69,8 +70,14 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 cart-checkout carts">
+      <div class="col-lg-4 col-12 cart-checkout carts">
         <div v-if="carts.length===0">
+          <h1></h1>
+          <div class="checkout-mobile">
+             <img src="../assets/img/cehckout.svg"  >
+                <h3 v-warna="'red'">Your Cart is Empty</h3>
+                <p v-warna="'black'">Please add some items from the menu</p>
+          </div>
         <Checkout />
         </div>
         <div v-for="(cart,index) in carts" :key="index">
@@ -153,7 +160,9 @@
       </div>
     </div>
     <div class="cart-order rounded-circle">
-            <i class="fa fa-shopping-cart shop">X</i>
+            <i class="fa fa-shopping-cart shop">
+              <b-icon-cart4 class="mt-3"></b-icon-cart4>
+            </i>
           </div>
   </div>
 </template>
@@ -252,7 +261,6 @@ export default {
     },
     next () {
       const counter = 2
-      // const angka = this.count += 1
       this.$router.push({ path: '/product', query: { limit: 5, pages: counter } })
       let pagesAkitf = this.allProduct.product.tableRow.pagesActive
       const totalPage = this.allProduct.product.tableRow.totalPages
@@ -391,6 +399,16 @@ margin-left: -50px;
     background-color: rgb(178, 184, 184);
     transition: all .8s;
   }
+  .loading-desktop {
+    width:150px;
+    margin:150px 300px;
+  }
+  .loading-mobile {
+    display: none;
+  }
+  .checkout-mobile {
+    display: none;
+  }
 /* Break Point */
 @media (max-width: 1024px) {
   .search-item {
@@ -400,6 +418,17 @@ margin-left: -50px;
 
 /* * Break Point  */
 @media (max-width: 768px) {
+  .checkout-mobile {
+    display: block;
+  }
+   .loading-desktop {
+    display: none;
+  }
+   .loading-mobile {
+    display: block;
+    width:150px;
+    margin:100px 120px;
+  }
   .search-item {
     display: none;
   }
@@ -459,6 +488,14 @@ margin-left: -50px;
 }
 /* * Break Point  */
 @media (max-width: 600px) {
+   .loading-desktop {
+    display: none;
+  }
+   .loading-mobile {
+    display: block;
+     width:150px;
+    margin:70px 170px;
+  }
   .search-item {
     display: none;
   }
@@ -523,6 +560,15 @@ margin-left: -50px;
     margin-top: 15px;
     margin-left: 15px;
     font-size: 20px;
+  }
+  .checkout-mobile img{
+    margin-left: 120px;
+  }
+  .checkout-mobile h3 {
+    margin-left: 100px;
+  }
+  .checkout-mobile p {
+    margin-left: 80px;
   }
 }
 </style>

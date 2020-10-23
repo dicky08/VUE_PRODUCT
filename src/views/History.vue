@@ -62,7 +62,7 @@
                 <thead>
                   <tr>
                     <!-- {{history_detail}} -->
-                    <th scope="col">No{{amount}}</th>
+                    <th scope="col">No</th>
                     <th scope="col">Invoice</th>
                     <th scope="col">Cashier</th>
                     <th scope="col">Date</th>
@@ -79,7 +79,6 @@
                     <td>
                       <a @click="detail(history.id)" class="btn btn-primary btn-sm" data-toggle="modal"
                         data-target="#ModalDetail"   >Detail Order </a>
-                      <!-- <router-link to="/DetailHistory" class="btn btn-primary btn-sm">Detail Order</router-link> -->
                     </td>
                     <td>Rp. {{history.amount}} </td>
                   </tr>
