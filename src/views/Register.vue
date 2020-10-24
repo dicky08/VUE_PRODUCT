@@ -46,11 +46,6 @@
                     </span>
                   </div>
                 </div>
-                 <select class="form-control mb-3" v-model="form.level" required>
-                  <option disabled value>Hak akses</option>
-                  <option value="0">Admin</option>
-                  <option value="1">Cashier</option>
-                </select>
                 <!-- Button -->
                 <button type="submit" class="btn btn-primary btn-block float-left">Registrasi</button>
                 <p>already have an account? <router-link to="/login">Login</router-link></p>
@@ -108,11 +103,6 @@
                   </span>
                 </div>
               </div>
-              <select class="form-control mb-3" v-model="form.level" required>
-                    <option disabled value>Hak akses</option>
-                    <option value="0">Admin</option>
-                    <option value="1">Cashier</option>
-                  </select>
               <!-- Button -->
               <button class="btn btn-primary btn-block float-left">Register</button>
               <p>already have an account? <router-link to="/login">Login</router-link></p>
@@ -131,8 +121,7 @@ export default {
     return {
       form: {
         email: '',
-        password: '',
-        level: ''
+        password: ''
       }
     }
   },
