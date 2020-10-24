@@ -56,7 +56,7 @@
                   />
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="searchProduct()">
-                      <i class="fa fa-search"></i>
+                      <b-icon-search></b-icon-search>
                     </button>
                   </div>
                 </div>

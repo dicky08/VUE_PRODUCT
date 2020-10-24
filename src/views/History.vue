@@ -6,7 +6,7 @@
         <Sidebar />
         <ModalDetail type="detail" :detailData="detailData"/>
         <div class="col p-4">
-          <div class="row shadow">
+          <div class="row ">
             <div class="col-12 col-md-6 col-lg-4 mb-3 ">
               <div class="card shadow1">
                 <div class="card-body">
@@ -47,7 +47,7 @@
             </div>
           </div>
 
-          <div class="row mt-5 shadow ">
+          <div class="row mt-5  ">
             <div class="col-lg-12 col-md-6 col-sm-6 col-12  chart">
                 <h4>Revenue Line</h4>
               <chart
@@ -56,7 +56,7 @@
             </div>
           </div>
           <div class="row mt-4">
-            <div class="col mt-3 shadow">
+            <div class="col-lg-12 col-12 mt-3 ">
               <h4></h4>
               <table class="table">
                 <thead>
